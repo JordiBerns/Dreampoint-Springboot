@@ -1,7 +1,7 @@
-package nl.yer.dreampoint.game;
+package nl.yer.middlemen.dreampoint.game;
 
-import nl.yer.dreampoint.character.Player;
-import nl.yer.dreampoint.playingfield.PlayingField;
+import nl.yer.middlemen.dreampoint.character.Player;
+import nl.yer.middlemen.dreampoint.playingfield.PlayingField;
 
 public class Game {
     private long id;

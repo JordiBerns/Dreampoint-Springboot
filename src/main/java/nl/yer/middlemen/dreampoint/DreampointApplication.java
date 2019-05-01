@@ -1,5 +1,6 @@
 package nl.yer.middlemen.dreampoint;
 
+import nl.yer.middlemen.dreampoint.game.MainMenu;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,5 +11,6 @@ public class DreampointApplication {
 		SpringApplication.run(DreampointApplication.class, args);
 	}
 
+	MainMenu mainMenu = new MainMenu();
 
 }

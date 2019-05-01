@@ -1,7 +1,7 @@
-package nl.yer.dreampoint.playingfield;
+package nl.yer.middlemen.dreampoint.playingfield;
 import java.util.Scanner;
 
-import static nl.yer.dreampoint.game.Game.highScore;
+import static nl.yer.middlemen.dreampoint.game.Game.highScore;
 
 public class PlayingField {
     private long id;

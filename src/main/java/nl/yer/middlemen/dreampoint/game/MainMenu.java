@@ -1,4 +1,4 @@
-package nl.yer.dreampoint.game;
+package nl.yer.middlemen.dreampoint.game;
 
 import java.util.Scanner;
 

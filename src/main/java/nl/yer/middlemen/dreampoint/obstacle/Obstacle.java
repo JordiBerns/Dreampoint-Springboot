@@ -1,4 +1,4 @@
-package nl.yer.dreampoint.obstacle;
+package nl.yer.middlemen.dreampoint.obstacle;
 
 public abstract class Obstacle {
 

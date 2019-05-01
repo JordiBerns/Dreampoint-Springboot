@@ -1,4 +1,4 @@
-package nl.yer.dreampoint.item;
+package nl.yer.middlemen.dreampoint.item;
 
 public class Projectile {
     private long id;

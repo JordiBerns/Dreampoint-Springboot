@@ -1,4 +1,4 @@
-package nl.yer.dreampoint.character;
+package nl.yer.middlemen.dreampoint.character;
 
 public class SmallEnemy extends Enemy {
 }

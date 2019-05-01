@@ -1,6 +1,6 @@
-package nl.yer.dreampoint.character;
+package nl.yer.middlemen.dreampoint.character;
 
-import nl.yer.dreampoint.item.Weapon;
+import nl.yer.middlemen.dreampoint.item.Weapon;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
