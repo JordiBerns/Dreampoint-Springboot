@@ -25,7 +25,7 @@ public class Player extends Character {
         this.score = 0;
     }
 
-    private void initializePlayer(){
+    public void initializePlayer(){
         Scanner input = new Scanner(System.in);
         // Boolean statements used later on to check scanner input
         boolean correctInfo = false;

@@ -9,10 +9,11 @@ public class Game {
     private PlayingField level = new PlayingField();
     public static int hiScore;
 
-    // method to create player, which automatically starts the creation of the player (because of the constructor)
+    // method to create player and start method to let user give information
     // after that de playingField wil start with the method to show the level and activates moving.
     public void runGame() {
-        player = new Player();
+        this.player = new Player();
+        this.player.initializePlayer();
         level.moving();
     }
 
