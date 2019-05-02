@@ -7,7 +7,7 @@ public class Game {
     private long id;
     private Player player;
     private PlayingField level = new PlayingField();
-    public static int highScore;
+    public static int hiScore;
 
     // method to create player, which automatically starts the creation of the player (because of the constructor)
     // after that de playingField wil start with the method to show the level and activates moving.
@@ -18,6 +18,10 @@ public class Game {
 
     public long getId() {
         return id;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     /*

@@ -6,4 +6,9 @@ public class Item {
     public long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "\uFF0B";
+    }
 }

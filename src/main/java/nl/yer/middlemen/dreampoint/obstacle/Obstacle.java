@@ -26,4 +26,9 @@ public abstract class Obstacle {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "\u274C";
+    }
+
 }

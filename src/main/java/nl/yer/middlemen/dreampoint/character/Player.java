@@ -17,7 +17,6 @@ public class Player extends Character {
 
     public Player(){
         this.score = 0;
-        this.initializePlayer();
     }
 
     private void initializePlayer(){
@@ -103,6 +102,11 @@ public class Player extends Character {
 
     public void setBullets(int bullets) {
         this.bullets = bullets;
+    }
+
+    @Override
+    public String toString() {
+        return "\u263A";
     }
 
 //    public Weapon getWeapon() {
