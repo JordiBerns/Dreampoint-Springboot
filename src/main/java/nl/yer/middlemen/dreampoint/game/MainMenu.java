@@ -42,7 +42,7 @@ public class MainMenu {
 
                 case "help":
                     HelpMenu help = new HelpMenu();
-                    help.helpMenu();
+                    help.runHelpMenu();
                     break;
 
                 case "quit":
