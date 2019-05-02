@@ -1,4 +1,5 @@
 package nl.yer.middlemen.dreampoint.playingfield;
+import nl.yer.middlemen.dreampoint.character.BigEnemy;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.item.Item;
@@ -58,15 +59,16 @@ public class PlayingField {
     }
 
     public void setEnemies(int first, int... rest) {
-        SmallEnemy enemy = new SmallEnemy();
+        SmallEnemy smallEnemy = new SmallEnemy();
+        BigEnemy bigEnemy = new BigEnemy();
         int xPos = first % 10;
         int yPos = first / 10;
-        map[yPos][xPos] = enemy;
+        map[yPos][xPos] = bigEnemy;
 
         for (int pos : rest) {
             xPos = pos % 10;
             yPos = pos / 10;
-            map[yPos][xPos] = enemy;
+            map[yPos][xPos] = smallEnemy;
         }
     }
 
@@ -242,20 +244,25 @@ public class PlayingField {
      */
     public boolean canShoot(int ypos, int xpos) {
         boolean possible = false;
-        if (map[ypos][xpos] == null) {
-            possible = true;
+        Object object;
+        if (map[ypos][xpos] != null) {
+            object = map[ypos][xpos].getClass();
+            if (object == SmallEnemy.class) {
+                hiScore += 10;
+                possible = true;
+            } else if (object == BigEnemy.class) {
+                hiScore += 20;
+                possible = true;
+            } else if (object == Item.class) {
+                hiScore -= 10;
+                possible = true;
+            } else if (object == Tree.class) {
+                map[ypos][xpos] = null;
+                possible = false;
+            }
         }
-        else if (map[ypos][xpos] instanceof SmallEnemy) {
-            hiScore += 20;
+        else {
             possible = true;
-        }
-        else if (map[ypos][xpos] instanceof Item) {
-            hiScore -= 10;
-            possible = true;
-        }
-        else if (map[ypos][xpos] instanceof Obstacle) {
-            map[ypos][xpos] = null;
-            possible = false;
         }
         return possible;
     }
