@@ -160,8 +160,8 @@ public class PlayingField {
 
         for(Object[] row : map){
             for(Object element: row){
-                if (element ==null) System.out.print("\u25A1 ");
-                else System.out.print(element+ " ");
+                if (element ==null) System.out.print("\u25A1 \t");
+                else System.out.print(element+ "\t");
             }
             System.out.println();
         }
