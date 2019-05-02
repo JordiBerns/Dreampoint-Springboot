@@ -5,10 +5,6 @@ import java.util.Scanner;
 public class MainMenu {
     private long id;
 
-    public MainMenu() {
-        runMainMenu();
-    }
-
     public void runMainMenu() {
         Scanner input = new Scanner(System.in);
         boolean keepRunning = true;
