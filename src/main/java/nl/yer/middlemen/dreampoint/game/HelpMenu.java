@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class HelpMenu {
     private long id;
 
-    public void helpMenu() {
+    public void runHelpMenu() {
         boolean helpIsRunning = true;
         while (helpIsRunning) {
             Scanner input = new Scanner(System.in);

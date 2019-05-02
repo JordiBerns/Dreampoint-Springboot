@@ -5,10 +5,6 @@ import java.util.Scanner;
 public class MainMenu {
     private long id;
 
-    public MainMenu() {
-        runMainMenu();
-    }
-
     public void runMainMenu() {
         Scanner input = new Scanner(System.in);
         boolean keepRunning = true;
@@ -42,7 +38,7 @@ public class MainMenu {
 
                 case "help":
                     HelpMenu help = new HelpMenu();
-                    help.helpMenu();
+                    help.runHelpMenu();
                     break;
 
                 case "quit":

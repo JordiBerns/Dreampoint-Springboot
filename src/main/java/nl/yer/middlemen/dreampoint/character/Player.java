@@ -1,25 +1,31 @@
 package nl.yer.middlemen.dreampoint.character;
 
 import nl.yer.middlemen.dreampoint.item.Weapon;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Entity
 public class Player extends Character {
 
-    private int score;
-    private int bullets;
-    private Weapon weapon;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private int age;
     private String sex;
     private String name;
     private String hairColour;
+    private int score;
 
     public Player(){
         this.score = 0;
     }
 
-    private void initializePlayer(){
+    public void initializePlayer(){
         Scanner input = new Scanner(System.in);
         // Boolean statements used later on to check scanner input
         boolean correctInfo = false;
@@ -88,6 +94,45 @@ public class Player extends Character {
                 + "\nHaircolor: "+ this.hairColour;
     }
 
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHairColour() {
+        return hairColour;
+    }
+
+    public void setHairColour(String hairColour) {
+        this.hairColour = hairColour;
+    }
+
     public int getScore() {
         return score;
     }
@@ -96,18 +141,23 @@ public class Player extends Character {
         this.score = score;
     }
 
-    public int getBullets() {
-        return bullets;
-    }
 
-    public void setBullets(int bullets) {
-        this.bullets = bullets;
-    }
 
     @Override
     public String toString() {
         return "\u263A";
     }
+
+    //    private int bullets;
+//    private Weapon weapon;
+
+    //    public int getBullets() {
+//        return bullets;
+//    }
+
+//    public void setBullets(int bullets) {
+//        this.bullets = bullets;
+//    }
 
 //    public Weapon getWeapon() {
 //        return weapon;

@@ -7,14 +7,9 @@ public abstract class Character {
     private boolean collision;
     private long id;
 
-    public void shoot() {
+    public void shoot() { }
 
-    }
-
-    public void move() {
-
-    }
-
+    public void move() { }
 
     public int getHealth() {
         return health;
