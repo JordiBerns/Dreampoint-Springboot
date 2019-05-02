@@ -1,5 +1,6 @@
 package nl.yer.middlemen.dreampoint.playingfield;
 import nl.yer.middlemen.dreampoint.character.Player;
+import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
@@ -24,8 +25,9 @@ public class PlayingField {
         map = new Object[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
-        setObstacles(23, 55, 34, 77, 89, 33, 43);
+        setObstacles(23, 55, 34, 77, 89);
         setItems(22, 13, 50, 90, 64);
+        setEnemies(44, 69, 99);
         setRandomStartPlayerPosition();
     }
 
@@ -52,6 +54,19 @@ public class PlayingField {
             xPos = pos % 10;
             yPos = pos / 10;
             map[yPos][xPos] = item;
+        }
+    }
+
+    public void setEnemies(int first, int... rest) {
+        SmallEnemy enemy = new SmallEnemy();
+        int xPos = first % 10;
+        int yPos = first / 10;
+        map[yPos][xPos] = enemy;
+
+        for (int pos : rest) {
+            xPos = pos % 10;
+            yPos = pos / 10;
+            map[yPos][xPos] = enemy;
         }
     }
 
@@ -94,9 +109,6 @@ public class PlayingField {
                 shoot(move);
             }
             else {
-
-                System.out.println();
-                System.out.println("Your score is: " + hiScore);
 
                 try {
                     switch (move.charAt(0)) {
@@ -142,6 +154,8 @@ public class PlayingField {
                     System.out.println("Can't move here: Out of bounds!");
                 }
             }
+            System.out.println();
+            System.out.println("Your score is: " + hiScore);
             if(walking) levelViewer();
         }
     }
@@ -215,6 +229,10 @@ public class PlayingField {
             hiScore += 10;
             System.out.println("Picked up an item!");
             return false;
+        }
+        else if (map[ypos][xpos] instanceof SmallEnemy) {
+            System.out.println("Can't move through enemies!");
+            return true;
         } else return false;
     }
 
@@ -224,9 +242,21 @@ public class PlayingField {
      */
     public boolean canShoot(int ypos, int xpos) {
         boolean possible = false;
-        if (map[ypos][xpos] == null) possible = true;
-        else if (map[ypos][xpos] instanceof Item) possible = false;
-        else if (map[ypos][xpos] instanceof Obstacle) possible = true;
+        if (map[ypos][xpos] == null) {
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof SmallEnemy) {
+            hiScore += 20;
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof Item) {
+            hiScore -= 10;
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof Obstacle) {
+            map[ypos][xpos] = null;
+            possible = false;
+        }
         return possible;
     }
 

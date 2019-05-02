@@ -8,4 +8,7 @@ public abstract class Enemy extends Character {
     public long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {return "\u2620";}
 }
