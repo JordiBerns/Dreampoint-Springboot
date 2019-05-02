@@ -12,5 +12,6 @@ public class DreampointApplication {
 	}
 
 	MainMenu mainMenu = new MainMenu();
+	mainMenu.runMainMenu();
 
 }
