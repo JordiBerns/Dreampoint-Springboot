@@ -9,9 +9,9 @@ public class DreampointApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DreampointApplication.class, args);
-	}
 
-	MainMenu mainMenu = new MainMenu();
-	mainMenu.runMainMenu();
+		MainMenu mainMenu = new MainMenu();
+		mainMenu.runMainMenu();
+	}
 
 }
