@@ -1,5 +1,6 @@
 package nl.yer.middlemen.dreampoint.playingfield;
 import nl.yer.middlemen.dreampoint.character.Player;
+import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
@@ -26,6 +27,7 @@ public class PlayingField {
         //Setting items, obstacles and random player position
         setObstacles(23, 55, 34, 77, 89);
         setItems(22, 13, 50, 90, 64);
+        setEnemies(44, 69, 99);
         setRandomStartPlayerPosition();
     }
 
@@ -52,6 +54,19 @@ public class PlayingField {
             xPos = pos % 10;
             yPos = pos / 10;
             map[yPos][xPos] = item;
+        }
+    }
+
+    public void setEnemies(int first, int... rest) {
+        SmallEnemy enemy = new SmallEnemy();
+        int xPos = first % 10;
+        int yPos = first / 10;
+        map[yPos][xPos] = enemy;
+
+        for (int pos : rest) {
+            xPos = pos % 10;
+            yPos = pos / 10;
+            map[yPos][xPos] = enemy;
         }
     }
 
@@ -88,61 +103,122 @@ public class PlayingField {
                 move = input.nextLine();
             } while(move.length() == 0);
 
+            move = move.toLowerCase();
+
+            if ((move.charAt(0) == 'i') || (move.charAt(0) == 'k') || (move.charAt(0) == 'l') || (move.charAt(0) == 'j')) {
+                shoot(move);
+            }
+            else {
+
+                try {
+                    switch (move.charAt(0)) {
+                        case 'w':
+                            if (!hasCollision(playerYpos - 1, playerXpos)) {
+                                map[playerYpos][playerXpos] = null;
+                                map[--playerYpos][playerXpos] = this.player;
+                            }
+                            break;
+
+                        case 's':
+                            if (!hasCollision(playerYpos + 1, playerXpos)) {
+                                map[playerYpos][playerXpos] = null;
+                                map[++playerYpos][playerXpos] = this.player;
+                            }
+                            break;
+
+                        case 'd':
+                            if (!hasCollision(playerYpos, playerXpos + 1)) {
+                                map[playerYpos][playerXpos] = null;
+                                map[playerYpos][++playerXpos] = this.player;
+                            }
+                            break;
+
+                        case 'a':
+                            if (!hasCollision(playerYpos, playerXpos - 1)) {
+                                map[playerYpos][playerXpos] = null;
+                                map[playerYpos][--playerXpos] = this.player;
+                            }
+                            break;
+
+                        case 'p':
+                            System.out.println();
+                            walking = false;
+                            break;
+
+                        default:
+                            System.out.println("Wrong input. Please use wasd");
+                            break;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    //Out of bounds error
+                    System.out.println("Can't move here: Out of bounds!");
+                }
+            }
             System.out.println();
             System.out.println("Your score is: " + hiScore);
-
-            try {
-                switch (move.charAt(0)) {
-                    case 'w':
-                        if (!hasCollision(playerYpos - 1, playerXpos)) {
-                            map[playerYpos][playerXpos] = null;
-                            map[--playerYpos][playerXpos] = this.player;
-                        }
-                        break;
-
-                    case 's':
-                        if (!hasCollision(playerYpos + 1, playerXpos)) {
-                            map[playerYpos][playerXpos] = null;
-                            map[++playerYpos][playerXpos] = this.player;
-                        }
-                        break;
-
-                    case 'd':
-                        if (!hasCollision(playerYpos, playerXpos + 1)) {
-                            map[playerYpos][playerXpos] = null;
-                            map[playerYpos][++playerXpos] = this.player;
-                        }
-                        break;
-
-                    case 'a':
-                        if (!hasCollision(playerYpos, playerXpos - 1)) {
-                            map[playerYpos][playerXpos] = null;
-                            map[playerYpos][--playerXpos] = this.player;
-                        }
-                        break;
-
-                    case 'p':
-                        System.out.println();
-                        walking = false;
-                        break;
-
-                    default:
-                        System.out.println("Wrong input. Please use wasd");
-                        break;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                //Out of bounds error
-                System.out.println("Can't move here: Out of bounds!");
-            }
-
             if(walking) levelViewer();
         }
     }
 
-    /**FOR FUTURE: instanceof is bad style, need different way of checking collision.
+    /*
+     * Direction is the input out of the same method as movement if it's i, j, k or l it goes to this method
+     * If it isn't out of bounds (thus true) and if it's possible to shoot that target on the field (thus true)
+     * Then that field will turn into null and the index will go up with 1, to go through the line of fire.
+     */
+    public void shoot(String direction) {
+        int i = 1;
+        switch (direction.charAt(0)) {
+            case 'i':
+                while ((checkBoundaries(playerYpos - i, playerXpos)) &&
+                        (canShoot(playerYpos - i, playerXpos)) ) {
+                    map[playerYpos - i][playerXpos] = null;
+                    i++;
+                }
+                break;
+
+            case 'k':
+                while ( (checkBoundaries(playerYpos + i, playerXpos)) &&
+                        (canShoot(playerYpos + i, playerXpos)) ) {
+                    map[playerYpos + i][playerXpos] = null;
+                    i++;
+                }
+                break;
+
+            case 'l':
+                while ( (checkBoundaries(playerYpos, playerXpos + i)) &&
+                        (canShoot(playerYpos, playerXpos + i)) ) {
+                    map[playerYpos][playerXpos + i] = null;
+                    i++;
+                }
+                break;
+
+            case 'j':
+                while ( (checkBoundaries(playerYpos, playerXpos - i)) &&
+                        (canShoot(playerYpos, playerXpos - i)) ) {
+                    map[playerYpos][playerXpos - i] = null;
+                    i++;
+                }
+                break;
+        }
+    }
+
+    /*
+     * Checks if the index (of the arrays) won't go out of bounds, returns a boolean true if both indexes are inbound
+     * Otherwise it will always return false.
+     */
+    public boolean checkBoundaries (int ypos, int xpos) {
+        boolean possible = false;
+        if ( (ypos < fieldHeight) && (ypos >= 0) ) {
+            if ( (xpos < fieldWidth) && (xpos >= 0) ) possible = true;
+        }
+        return possible;
+    }
+
+    /*FOR FUTURE: instanceof is bad style, need different way of checking collision.
      * Maybe the object array map needs to be an 'Entity' array which is a parent class of all classes that can appear on the grid.
      * The Entity class could then have a field: boolean collision = false. Then the obstacle could hide this field
-     * with boolean collision = true and the hasCollision function would simply be: return map[ypos][xpos].getCollision()*/
+     * with boolean collision = true and the hasCollision function would simply be: return map[ypos][xpos].getCollision()
+     */
     public boolean hasCollision(int ypos, int xpos) { //Checks if there is anything on (ypos, xpos)
         if (map[ypos][xpos] == null) return false;
         else if (map[ypos][xpos] instanceof Obstacle) {
@@ -153,10 +229,41 @@ public class PlayingField {
             hiScore += 10;
             System.out.println("Picked up an item!");
             return false;
+        }
+        else if (map[ypos][xpos] instanceof SmallEnemy) {
+            System.out.println("Can't move through enemies!");
+            return true;
         } else return false;
     }
 
-    public void levelViewer(){ //Displays the level
+    /*
+     * Check to see what Object is on the field. Every Object has an interaction and returns true if it can shoot the
+     * Object. If it can't shoot the Object, it will return false.
+     */
+    public boolean canShoot(int ypos, int xpos) {
+        boolean possible = false;
+        if (map[ypos][xpos] == null) {
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof SmallEnemy) {
+            hiScore += 20;
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof Item) {
+            hiScore -= 10;
+            possible = true;
+        }
+        else if (map[ypos][xpos] instanceof Obstacle) {
+            map[ypos][xpos] = null;
+            possible = false;
+        }
+        return possible;
+    }
+
+    /*
+     * Displays the level.
+     */
+    public void levelViewer(){
 
         for(Object[] row : map){
             for(Object element: row){

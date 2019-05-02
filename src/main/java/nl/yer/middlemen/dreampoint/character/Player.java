@@ -141,8 +141,6 @@ public class Player extends Character {
         this.score = score;
     }
 
-
-
     @Override
     public String toString() {
         return "\u263A";
