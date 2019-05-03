@@ -4,7 +4,10 @@ public class BigEnemy extends Enemy {
 
     private long id;
 
-    public void getShotAt(int hpGone) {
+    public BigEnemy() {
+        this.setCanDamage(true);
+        this.setCanTakeAmountOfShots(2);
+        this.setAddToHiScore(20);
     }
 
     @Override

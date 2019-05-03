@@ -2,6 +2,7 @@ package nl.yer.middlemen.dreampoint.playingfield;
 import nl.yer.middlemen.dreampoint.character.BigEnemy;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
+import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
@@ -18,12 +19,12 @@ public class PlayingField {
     private int playerYpos;
     private int playerXpos;
 
-    private static Object[][] map ;
+    private static PiecesOnPlayingField[][] map ;
 
     public PlayingField(){
         this.fieldWidth = 10;
         this.fieldHeight = 10;
-        map = new Object[fieldHeight][fieldWidth];
+        map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
         setObstacles(23, 55, 34, 77, 89);
@@ -243,23 +244,12 @@ public class PlayingField {
      * Object. If it can't shoot the Object, it will return false.
      */
     public boolean canShoot(int ypos, int xpos) {
-        boolean possible = false;
-        Object object;
+        boolean possible;
+        PiecesOnPlayingField pieceOnField;
+
         if (map[ypos][xpos] != null) {
-            object = map[ypos][xpos].getClass();
-            if (object == SmallEnemy.class) {
-                hiScore += 10;
-                possible = true;
-            } else if (object == BigEnemy.class) {
-                hiScore += 20;
-                possible = true;
-            } else if (object == Item.class) {
-                hiScore -= 10;
-                possible = true;
-            } else if (object == Tree.class) {
-                map[ypos][xpos] = null;
-                possible = false;
-            }
+            pieceOnField = map[ypos][xpos];
+            possible = pieceOnField.determineIfCanShoot();
         }
         else {
             possible = true;

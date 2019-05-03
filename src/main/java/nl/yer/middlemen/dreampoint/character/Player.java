@@ -20,6 +20,7 @@ public class Player extends Character {
     private String name;
     private String hairColour;
     private int score;
+    private int health = 100;
 
     public Player(){
         this.score = 0;
@@ -145,6 +146,16 @@ public class Player extends Character {
     public String toString() {
         return "\u263A";
     }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
+    }
+
+//    @Override
+//    public void shotsTaken() {
+//
+//    }
 
     //    private int bullets;
 //    private Weapon weapon;
