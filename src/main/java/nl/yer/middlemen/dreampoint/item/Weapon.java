@@ -7,6 +7,9 @@ public abstract class Weapon extends Item {
     public abstract void shoot();
 
     @Override
+    public abstract boolean determineIfCanShoot();
+
+    @Override
     public long getId() {
         return id;
     }

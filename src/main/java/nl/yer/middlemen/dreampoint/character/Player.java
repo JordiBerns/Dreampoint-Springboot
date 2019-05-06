@@ -193,6 +193,16 @@ public class Player extends Character {
     }
 
     @Override
+    public String toString() {
+        return "\u263A";
+    }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
+    }
+
+    @Override
     public long getId() {
         return id;
     }
@@ -261,16 +271,6 @@ public class Player extends Character {
 
     public void setMap(PiecesOnPlayingField[][] map) {
         this.map = map;
-    }
-
-    @Override
-    public String toString() {
-        return "\u263A";
-    }
-
-    @Override
-    public boolean determineIfCanShoot() {
-        return false;
     }
 
 //    @Override
