@@ -1,7 +1,5 @@
 package nl.yer.middlemen.dreampoint.character;
 
-import nl.yer.middlemen.dreampoint.item.Weapon;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +18,7 @@ public class Player extends Character {
     private String name;
     private String hairColour;
     private int score;
+    private int health = 100;
 
     public Player(){
         this.score = 0;
@@ -75,7 +74,7 @@ public class Player extends Character {
             // Check if players input is correct
             System.out.println();
             System.out.println("Is your input correct (y/n)? ");
-            System.out.println(this.getPlayerInfo());
+            System.out.println(this.showPlayerInfo());
             String stringCorrect = input.nextLine();
 
             // While loop to check if y or n is selected during prompt
@@ -87,7 +86,7 @@ public class Player extends Character {
         }
     }
 
-    public String getPlayerInfo(){
+    public String showPlayerInfo(){
         return "Name: " + this.name
                 + "\nAge: " + this.age
                 + "\nGender: " + this.sex
@@ -141,12 +140,20 @@ public class Player extends Character {
         this.score = score;
     }
 
-
-
     @Override
     public String toString() {
         return "\u263A";
     }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
+    }
+
+//    @Override
+//    public void shotsTaken() {
+//
+//    }
 
     //    private int bullets;
 //    private Weapon weapon;

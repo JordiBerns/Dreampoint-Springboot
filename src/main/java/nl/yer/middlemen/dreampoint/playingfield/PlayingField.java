@@ -1,5 +1,8 @@
 package nl.yer.middlemen.dreampoint.playingfield;
+import nl.yer.middlemen.dreampoint.character.BigEnemy;
 import nl.yer.middlemen.dreampoint.character.Player;
+import nl.yer.middlemen.dreampoint.character.SmallEnemy;
+import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
@@ -16,16 +19,17 @@ public class PlayingField {
     private int playerYpos;
     private int playerXpos;
 
-    private static Object[][] map ;
+    private static PiecesOnPlayingField[][] map ;
 
     public PlayingField(){
         this.fieldWidth = 10;
         this.fieldHeight = 10;
-        map = new Object[fieldHeight][fieldWidth];
+        map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
-        setObstacles(23, 55, 34, 77, 89, 33, 43);
+        setObstacles(23, 55, 34, 77, 89);
         setItems(22, 13, 50, 90, 64);
+        setEnemies(44, 69, 99);
         setRandomStartPlayerPosition();
     }
 
@@ -52,6 +56,20 @@ public class PlayingField {
             xPos = pos % 10;
             yPos = pos / 10;
             map[yPos][xPos] = item;
+        }
+    }
+
+    public void setEnemies(int first, int... rest) {
+        SmallEnemy smallEnemy = new SmallEnemy();
+        BigEnemy bigEnemy = new BigEnemy();
+        int xPos = first % 10;
+        int yPos = first / 10;
+        map[yPos][xPos] = bigEnemy;
+
+        for (int pos : rest) {
+            xPos = pos % 10;
+            yPos = pos / 10;
+            map[yPos][xPos] = smallEnemy;
         }
     }
 
@@ -94,9 +112,6 @@ public class PlayingField {
                 shoot(move);
             }
             else {
-
-                System.out.println();
-                System.out.println("Your score is: " + hiScore);
 
                 try {
                     switch (move.charAt(0)) {
@@ -142,6 +157,8 @@ public class PlayingField {
                     System.out.println("Can't move here: Out of bounds!");
                 }
             }
+            System.out.println();
+            System.out.println("Your score is: " + hiScore);
             if(walking) levelViewer();
         }
     }
@@ -215,6 +232,10 @@ public class PlayingField {
             hiScore += 10;
             System.out.println("Picked up an item!");
             return false;
+        }
+        else if (map[ypos][xpos] instanceof SmallEnemy) {
+            System.out.println("Can't move through enemies!");
+            return true;
         } else return false;
     }
 
@@ -223,10 +244,16 @@ public class PlayingField {
      * Object. If it can't shoot the Object, it will return false.
      */
     public boolean canShoot(int ypos, int xpos) {
-        boolean possible = false;
-        if (map[ypos][xpos] == null) possible = true;
-        else if (map[ypos][xpos] instanceof Item) possible = false;
-        else if (map[ypos][xpos] instanceof Obstacle) possible = true;
+        boolean possible;
+        PiecesOnPlayingField pieceOnField;
+
+        if (map[ypos][xpos] != null) {
+            pieceOnField = map[ypos][xpos];
+            possible = pieceOnField.determineIfCanShoot();
+        }
+        else {
+            possible = true;
+        }
         return possible;
     }
 
@@ -237,7 +264,7 @@ public class PlayingField {
 
         for(Object[] row : map){
             for(Object element: row){
-                if (element ==null) System.out.print("\u25A1 \t");
+                if (element ==null) System.out.print("\u25A1\t");
                 else System.out.print(element+ "\t");
             }
             System.out.println();
