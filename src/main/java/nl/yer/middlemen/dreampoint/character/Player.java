@@ -1,7 +1,5 @@
 package nl.yer.middlemen.dreampoint.character;
 
-import nl.yer.middlemen.dreampoint.item.Weapon;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -76,7 +74,7 @@ public class Player extends Character {
             // Check if players input is correct
             System.out.println();
             System.out.println("Is your input correct (y/n)? ");
-            System.out.println(this.getPlayerInfo());
+            System.out.println(this.showPlayerInfo());
             String stringCorrect = input.nextLine();
 
             // While loop to check if y or n is selected during prompt
@@ -88,7 +86,7 @@ public class Player extends Character {
         }
     }
 
-    public String getPlayerInfo(){
+    public String showPlayerInfo(){
         return "Name: " + this.name
                 + "\nAge: " + this.age
                 + "\nGender: " + this.sex
