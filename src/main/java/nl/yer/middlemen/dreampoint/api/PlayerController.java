@@ -2,7 +2,6 @@ package nl.yer.middlemen.dreampoint.api;
 
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.service.PlayerService;
-import org.aspectj.apache.bcel.util.Play;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
