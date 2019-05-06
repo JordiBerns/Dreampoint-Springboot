@@ -3,6 +3,7 @@ package nl.yer.middlemen.dreampoint.service;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.persistent.PlayerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
+    @Transactional
     public Player save (Player player) {
         return this.playerRepository.save(player);
     }

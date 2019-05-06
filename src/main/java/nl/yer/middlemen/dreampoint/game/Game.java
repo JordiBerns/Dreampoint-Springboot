@@ -3,6 +3,8 @@ package nl.yer.middlemen.dreampoint.game;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.playingfield.PlayingField;
 
+import java.util.Scanner;
+
 public class Game {
     private long id;
     private Player player;
@@ -12,9 +14,27 @@ public class Game {
     // method to create player and start method to let user give information
     // after that de playingField wil start with the method to show the level and activates moving.
     public void runGame() {
+        boolean runningGame = true;
         this.player = new Player();
-        this.player.initializePlayer();
-        level.moving();
+        //this.player.initializePlayer();
+        player.setMap(level.makeLevel());
+        player.setRandomStartPlayerPosition();
+
+        while(runningGame) {
+            level.levelViewer(player.getMap());
+            Scanner inputScanner = new Scanner(System.in);
+            String input = inputScanner.nextLine().toLowerCase();
+
+            if (input.charAt(0) == 'w' || input.charAt(0) == 'a' || input.charAt(0) == 's' || input.charAt(0) == 'd') {
+                player.move(input);
+            } else if (input.charAt(0) == 'i' || input.charAt(0) == 'j' || input.charAt(0) == 'k' || input.charAt(0) == 'l') {
+                player.shoot(input);
+            } else if (input.charAt(0) == 'p') {
+                runningGame = false;
+            } else {
+                System.out.println("Something went wrong, please enter 'w', 'a', 's', 'd' // 'i', 'j', 'k', 'l' // 'p'");
+            }
+        }
     }
 
     public long getId() {
