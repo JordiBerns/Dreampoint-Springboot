@@ -10,6 +10,7 @@ public class BigEnemy extends Enemy {
         this.setCanDamage(true);
         this.setCanTakeAmountOfShots(2);
         this.setAddToHiScore(20);
+        this.setCanContinueShooting(true);
     }
 
     @Override

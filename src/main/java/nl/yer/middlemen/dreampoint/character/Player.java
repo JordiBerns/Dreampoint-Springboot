@@ -68,50 +68,50 @@ public class Player extends Character {
        }
    }
 
-       public void shoot (String direction){
-           PlayingField level = new PlayingField();
-           int i = 1;
+   public void shoot (String direction){
+       PlayingField level = new PlayingField();
+       int i = 1;
 
-           switch (direction.charAt(0)) {
-               case 'i':
-                   while ((level.checkBoundaries(map, playerYpos - i, playerXpos)) &&
-                           (level.canShoot(map, playerYpos - i, playerXpos))) {
-                       map[playerYpos - i][playerXpos] = null;
-                       i++;
-                   }
-                   break;
+       switch (direction.charAt(0)) {
+           case 'i':
+               while ((level.checkBoundaries(map, playerYpos - i, playerXpos)) &&
+                       (level.canShoot(map, playerYpos - i, playerXpos))) {
+                   map[playerYpos - i][playerXpos] = null;
+                   i++;
+               }
+               break;
 
-               case 'k':
-                   while ((level.checkBoundaries(map, playerYpos + i, playerXpos)) &&
-                           (level.canShoot(map, playerYpos + i, playerXpos))) {
-                       map[playerYpos + i][playerXpos] = null;
-                       i++;
-                   }
-                   break;
+           case 'k':
+               while ((level.checkBoundaries(map, playerYpos + i, playerXpos)) &&
+                       (level.canShoot(map, playerYpos + i, playerXpos))) {
+                   map[playerYpos + i][playerXpos] = null;
+                   i++;
+               }
+               break;
 
-               case 'l':
-                   while ((level.checkBoundaries(map, playerYpos, playerXpos + i)) &&
-                           (level.canShoot(map, playerYpos, playerXpos + i))) {
-                       map[playerYpos][playerXpos + i] = null;
-                       i++;
-                   }
-                   break;
+           case 'l':
+               while ((level.checkBoundaries(map, playerYpos, playerXpos + i)) &&
+                       (level.canShoot(map, playerYpos, playerXpos + i))) {
+                   map[playerYpos][playerXpos + i] = null;
+                   i++;
+               }
+               break;
 
-               case 'j':
-                   while ((level.checkBoundaries(map, playerYpos, playerXpos - i)) &&
-                           (level.canShoot(map, playerYpos, playerXpos - i))) {
-                       map[playerYpos][playerXpos - i] = null;
-                       i++;
-                   }
-                   break;
-           }
+           case 'j':
+               while ((level.checkBoundaries(map, playerYpos, playerXpos - i)) &&
+                       (level.canShoot(map, playerYpos, playerXpos - i))) {
+                   map[playerYpos][playerXpos - i] = null;
+                   i++;
+               }
+               break;
        }
+   }
 
-    public void initializePlayer(){
-        Scanner input = new Scanner(System.in);
-        // Boolean statements used later on to check scanner input
-        boolean correctInfo = false;
-        boolean correctAge;
+   public void initializePlayer(){
+       Scanner input = new Scanner(System.in);
+       // Boolean statements used later on to check scanner input
+       boolean correctInfo = false;
+       boolean correctAge;
 
         while (!correctInfo) {
             System.out.println();

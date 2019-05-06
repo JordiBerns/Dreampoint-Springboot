@@ -9,6 +9,7 @@ public class Medkit extends Item {
     public Medkit() {
         this.setCanDamage(true);
         this.setCanTakeAmountOfShots(1);
+        this.setCanContinueShooting(true);
     }
 
     public int increaseHp(){

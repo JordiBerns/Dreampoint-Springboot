@@ -10,6 +10,7 @@ public class SmallEnemy extends Enemy {
         this.setCanDamage(true);
         this.setCanTakeAmountOfShots(1);
         this.setAddToHiScore(10);
+        this.setCanContinueShooting(true);
     }
 
     @Override
