@@ -26,14 +26,14 @@ public class PlayingField {
         map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
-        setObstacles(23, 55, 34, 77, 89);
+        setTrees(23, 55, 34, 77, 89);
         setMedkits(22, 13, 50, 90, 64);
         setEnemies(44, 69, 99);
         return map;
     }
 
-    public void setObstacles(int first, int... rest) {
-        Obstacle tree = new Tree();
+    public void setTrees(int first, int... rest) {
+        Tree tree = new Tree();
         int xPos = first % 10;
         int yPos = first / 10;
         map[yPos][xPos] = tree;

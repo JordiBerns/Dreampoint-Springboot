@@ -5,7 +5,8 @@ public class Wall extends Obstacle {
     private long id;
 
     public Wall() {
-        setCanDamage(false);
+        this.setCanDamage(false);
+        this.setCanContinueShooting(false);
     }
 
     @Override

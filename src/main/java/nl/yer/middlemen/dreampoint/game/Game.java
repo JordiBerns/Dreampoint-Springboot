@@ -24,8 +24,9 @@ public class Game {
             level.levelViewer(player.getMap());
             Scanner inputScanner = new Scanner(System.in);
             String input = inputScanner.nextLine().toLowerCase();
-
-            if (input.charAt(0) == 'w' || input.charAt(0) == 'a' || input.charAt(0) == 's' || input.charAt(0) == 'd') {
+            if(input.length() <=0) {
+                System.out.println("Enter key is not valid, please enter 'w', 'a', 's', 'd' // 'i', 'j', 'k', 'l' // 'p'");
+            } else if (input.charAt(0) == 'w' || input.charAt(0) == 'a' || input.charAt(0) == 's' || input.charAt(0) == 'd') {
                 player.move(input);
             } else if (input.charAt(0) == 'i' || input.charAt(0) == 'j' || input.charAt(0) == 'k' || input.charAt(0) == 'l') {
                 player.shoot(input);
