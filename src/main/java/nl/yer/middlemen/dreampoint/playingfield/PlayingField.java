@@ -74,6 +74,7 @@ public class PlayingField {
         }
     }
 
+
     /*
      * Checks if the index (of the arrays) won't go out of bounds, returns a boolean true if both indexes are inbound
      * Otherwise it will always return false.
