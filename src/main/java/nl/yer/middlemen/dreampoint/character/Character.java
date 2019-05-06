@@ -1,23 +1,15 @@
 package nl.yer.middlemen.dreampoint.character;
 
-public abstract class Character {
+import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 
-    private int health;
+public abstract class Character extends PiecesOnPlayingField {
+
     private String name;
     private boolean collision;
     private long id;
 
-    public void shoot() { }
-
-    public void move() { }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
+//    public void shoot() { }
+//    public void move() { }
 
     public String getName() {
         return name;
