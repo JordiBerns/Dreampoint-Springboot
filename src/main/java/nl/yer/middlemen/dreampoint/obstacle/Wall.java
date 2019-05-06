@@ -4,8 +4,17 @@ public class Wall extends Obstacle {
 
     private long id;
 
+    public Wall() {
+        setCanDamage(false);
+    }
+
     @Override
     public long getId() {
         return id;
+    }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
     }
 }

@@ -8,4 +8,9 @@ public class Pitfall extends Obstacle {
     public long getId() {
         return id;
     }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
+    }
 }

@@ -1,6 +1,8 @@
 package nl.yer.middlemen.dreampoint.playingfield;
+import nl.yer.middlemen.dreampoint.character.BigEnemy;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
+import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
@@ -17,12 +19,12 @@ public class PlayingField {
     private int playerYpos;
     private int playerXpos;
 
-    private static Object[][] map ;
+    private static PiecesOnPlayingField[][] map ;
 
     public PlayingField(){
         this.fieldWidth = 10;
         this.fieldHeight = 10;
-        map = new Object[fieldHeight][fieldWidth];
+        map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
         setObstacles(23, 55, 34, 77, 89);
@@ -58,15 +60,16 @@ public class PlayingField {
     }
 
     public void setEnemies(int first, int... rest) {
-        SmallEnemy enemy = new SmallEnemy();
+        SmallEnemy smallEnemy = new SmallEnemy();
+        BigEnemy bigEnemy = new BigEnemy();
         int xPos = first % 10;
         int yPos = first / 10;
-        map[yPos][xPos] = enemy;
+        map[yPos][xPos] = bigEnemy;
 
         for (int pos : rest) {
             xPos = pos % 10;
             yPos = pos / 10;
-            map[yPos][xPos] = enemy;
+            map[yPos][xPos] = smallEnemy;
         }
     }
 
@@ -241,21 +244,15 @@ public class PlayingField {
      * Object. If it can't shoot the Object, it will return false.
      */
     public boolean canShoot(int ypos, int xpos) {
-        boolean possible = false;
-        if (map[ypos][xpos] == null) {
-            possible = true;
+        boolean possible;
+        PiecesOnPlayingField pieceOnField;
+
+        if (map[ypos][xpos] != null) {
+            pieceOnField = map[ypos][xpos];
+            possible = pieceOnField.determineIfCanShoot();
         }
-        else if (map[ypos][xpos] instanceof SmallEnemy) {
-            hiScore += 20;
+        else {
             possible = true;
-        }
-        else if (map[ypos][xpos] instanceof Item) {
-            hiScore -= 10;
-            possible = true;
-        }
-        else if (map[ypos][xpos] instanceof Obstacle) {
-            map[ypos][xpos] = null;
-            possible = false;
         }
         return possible;
     }
