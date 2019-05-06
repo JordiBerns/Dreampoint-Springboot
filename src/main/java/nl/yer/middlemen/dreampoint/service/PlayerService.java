@@ -3,6 +3,7 @@ package nl.yer.middlemen.dreampoint.service;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.persistent.PlayerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
@@ -30,5 +31,8 @@ public class PlayerService {
     public void deleteById(Long aLong) {
         this.playerRepository.deleteById(aLong);
     }
+
+
+
 
 }

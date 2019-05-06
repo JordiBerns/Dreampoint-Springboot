@@ -38,6 +38,7 @@ public class PlayerController {
         return this.playerService.save(player);
     }
 
+
     @PutMapping("{id}")
     public Player update(@PathVariable long id, @RequestBody Player input) {
         Optional<Player> optionalTarget  = this.playerService.findById(id);
