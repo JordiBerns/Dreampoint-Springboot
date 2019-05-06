@@ -113,34 +113,46 @@ public class PlayingField {
             }
             else {
 
-                try {
+
                     switch (move.charAt(0)) {
                         case 'w':
-                            if (!hasCollision(playerYpos - 1, playerXpos)) {
-                                map[playerYpos][playerXpos] = null;
-                                map[--playerYpos][playerXpos] = this.player;
+                            if(checkBoundaries(playerYpos -1, playerXpos)){
+                                if (!hasCollision(playerYpos - 1, playerXpos)) {
+                                    map[playerYpos][playerXpos] = null;
+                                    map[--playerYpos][playerXpos] = this.player;
+                                }
                             }
+
                             break;
 
                         case 's':
-                            if (!hasCollision(playerYpos + 1, playerXpos)) {
-                                map[playerYpos][playerXpos] = null;
-                                map[++playerYpos][playerXpos] = this.player;
+                            if(checkBoundaries(playerYpos +1, playerXpos)){
+                                if (!hasCollision(playerYpos + 1, playerXpos)) {
+                                    map[playerYpos][playerXpos] = null;
+                                    map[++playerYpos][playerXpos] = this.player;
+                                }
                             }
+
                             break;
 
                         case 'd':
-                            if (!hasCollision(playerYpos, playerXpos + 1)) {
-                                map[playerYpos][playerXpos] = null;
-                                map[playerYpos][++playerXpos] = this.player;
+                            if(checkBoundaries(playerYpos, playerXpos +1)){
+                                if (!hasCollision(playerYpos, playerXpos + 1)) {
+                                    map[playerYpos][playerXpos] = null;
+                                    map[playerYpos][++playerXpos] = this.player;
+                                }
                             }
+
                             break;
 
                         case 'a':
-                            if (!hasCollision(playerYpos, playerXpos - 1)) {
-                                map[playerYpos][playerXpos] = null;
-                                map[playerYpos][--playerXpos] = this.player;
+                            if(checkBoundaries(playerYpos,playerXpos -1)){
+                                if (!hasCollision(playerYpos, playerXpos - 1)) {
+                                    map[playerYpos][playerXpos] = null;
+                                    map[playerYpos][--playerXpos] = this.player;
+                                }
                             }
+
                             break;
 
                         case 'p':
@@ -152,10 +164,7 @@ public class PlayingField {
                             System.out.println("Wrong input. Please use wasd");
                             break;
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    //Out of bounds error
-                    System.out.println("Can't move here: Out of bounds!");
-                }
+
             }
             System.out.println();
             System.out.println("Your score is: " + hiScore);
