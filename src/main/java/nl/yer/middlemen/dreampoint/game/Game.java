@@ -17,7 +17,7 @@ public class Game {
         boolean runningGame = true;
         this.player = new Player();
         //this.player.initializePlayer();
-        player.setMap(level.makeLevel());
+        level.makeLevel();
         player.setRandomStartPlayerPosition();
 
         while(runningGame) {
@@ -34,6 +34,7 @@ public class Game {
             } else {
                 System.out.println("Something went wrong, please enter 'w', 'a', 's', 'd' // 'i', 'j', 'k', 'l' // 'p'");
             }
+            level.moveEnemies();
         }
     }
 

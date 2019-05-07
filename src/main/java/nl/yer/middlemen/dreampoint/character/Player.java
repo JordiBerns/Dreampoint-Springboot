@@ -32,7 +32,7 @@ public class Player extends Character {
            case 'w':
                if(level.checkBoundaries(playerYpos - 1, playerXpos)) {
                     if (!level.hasCollision(playerYpos - 1, playerXpos)) {
-                        PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
+                        PlayingField.setNullOnMap(playerYpos, playerXpos);
                         PlayingField.setObjectOnMap(--playerYpos, playerXpos, this);
                     }
                }
@@ -97,9 +97,9 @@ public class Player extends Character {
                    break;
 
                case 'j':
-                   while ((level.checkBoundaries(map, playerYpos, playerXpos - i)) &&
-                           (level.canShoot(map, playerYpos, playerXpos - i))) {
-                       map[playerYpos][playerXpos - i] = null;
+                   while ((level.checkBoundaries(playerYpos, playerXpos - i)) &&
+                           (level.canShoot(playerYpos, playerXpos - i))) {
+                       PlayingField.setObjectOnMap(playerYpos, playerXpos - i, null);
                        i++;
                    }
                    break;
@@ -184,11 +184,11 @@ public class Player extends Character {
             pos = (int) (Math.random() * 100);  //Random position between 0 and 99
             xPos = pos % 10;
             yPos = pos / 10;
-        } while(map[yPos][xPos] != null);
+        } while(PlayingField.checkObjectOnMap(yPos, xPos) != null);
 
-        PlayingField.map[yPos][xPos] = this;
+        PlayingField.setObjectOnMap(yPos, xPos, this);
         playerXpos = xPos;
-        playerYpos= yPos;
+        playerYpos = yPos;
     }
 
     @Override
@@ -254,13 +254,6 @@ public class Player extends Character {
         this.playerXpos = playerXpos;
     }
 
-    public PiecesOnPlayingField[][] getMap() {
-        return map;
-    }
-
-    public void setMap(PiecesOnPlayingField[][] map) {
-        this.map = map;
-    }
 
     @Override
     public String toString() {

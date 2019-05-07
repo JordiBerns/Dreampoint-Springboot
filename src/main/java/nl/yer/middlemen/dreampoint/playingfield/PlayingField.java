@@ -8,6 +8,7 @@ import nl.yer.middlemen.dreampoint.item.Item;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,9 +19,8 @@ public class PlayingField {
     private int fieldWidth;
     private int fieldHeight;
     private Player player;
-
-    private static PiecesOnPlayingField[][] map ;
-    private List<Enemy> enemies;
+    private static PiecesOnPlayingField[][] map;
+    private List<Enemy> enemies = new ArrayList<>();
     public PlayingField(){
     }
 
@@ -136,6 +136,7 @@ public class PlayingField {
         return possible;
     }
 
+
     /*
      * Displays the level.
      */
@@ -157,6 +158,13 @@ public class PlayingField {
     }
     public static void setObjectOnMap(int yPos, int xPos, PiecesOnPlayingField piece){
         map[yPos][xPos] = piece;
+    }
+
+    public static void setNullOnMap(int yPos, int xPos){
+        map[yPos][xPos] = null;
+    }
+    public static PiecesOnPlayingField checkObjectOnMap(int yPos, int xPos){
+        return map[yPos][xPos];
     }
 
     public int getFieldWidth() {
