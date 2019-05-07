@@ -105,12 +105,13 @@ public class Player extends Character {
                    break;
            }
        }
+   }
 
-    public void initializePlayer(){
-        Scanner input = new Scanner(System.in);
-        // Boolean statements used later on to check scanner input
-        boolean correctInfo = false;
-        boolean correctAge;
+   public void initializePlayer(){
+       Scanner input = new Scanner(System.in);
+       // Boolean statements used later on to check scanner input
+       boolean correctInfo = false;
+       boolean correctAge;
 
         while (!correctInfo) {
             System.out.println();
@@ -192,6 +193,16 @@ public class Player extends Character {
     }
 
     @Override
+    public String toString() {
+        return "\u263A";
+    }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        return false;
+    }
+
+    @Override
     public long getId() {
         return id;
     }
@@ -254,16 +265,6 @@ public class Player extends Character {
         this.playerXpos = playerXpos;
     }
 
-
-    @Override
-    public String toString() {
-        return "\u263A";
-    }
-
-    @Override
-    public boolean determineIfCanShoot() {
-        return false;
-    }
 
 //    @Override
 //    public void shotsTaken() {

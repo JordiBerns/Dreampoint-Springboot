@@ -9,18 +9,7 @@ public abstract class Obstacle extends PiecesOnPlayingField {
     private long id;
 
     @Override
-    public boolean determineIfCanShoot() {
-        if (this.isCanDamage()) {
-            if (this.getCanTakeAmountOfShots() > 1) {
-                this.setCanTakeAmountOfShots(this.getCanTakeAmountOfShots() - 1);
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+    public abstract boolean determineIfCanShoot();
 
     public int getXPosition() {
         return xPosition;
@@ -41,10 +30,4 @@ public abstract class Obstacle extends PiecesOnPlayingField {
     public long getId() {
         return id;
     }
-
-    @Override
-    public String toString() {
-        return "\u274C";
-    }
-
 }

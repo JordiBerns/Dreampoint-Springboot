@@ -1,6 +1,8 @@
 package nl.yer.middlemen.dreampoint.character;
 
 import nl.yer.middlemen.dreampoint.playingfield.PlayingField;
+import static nl.yer.middlemen.dreampoint.game.Game.hiScore;
+
 
 public class SmallEnemy extends Enemy {
 
@@ -12,6 +14,22 @@ public class SmallEnemy extends Enemy {
         this.setCanTakeAmountOfShots(1);
         this.setAddToHiScore(10);
         this.direction = 0;
+        this.setCanContinueShooting(true);
+    }
+
+    @Override
+    public boolean determineIfCanShoot() {
+        if (this.isCanDamage()) {
+            if (this.getCanTakeAmountOfShots() > 1) {
+                this.setCanTakeAmountOfShots(this.getCanTakeAmountOfShots() - 1);
+                return false;
+            } else {
+                hiScore += this.getAddToHiScore();
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override

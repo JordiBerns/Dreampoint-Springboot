@@ -4,13 +4,11 @@ import nl.yer.middlemen.dreampoint.character.Enemy;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
-import nl.yer.middlemen.dreampoint.item.Item;
+import nl.yer.middlemen.dreampoint.item.Medkit;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static nl.yer.middlemen.dreampoint.game.Game.hiScore;
 
@@ -30,14 +28,14 @@ public class PlayingField {
         map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
-        setObstacles(23, 55, 34, 77, 89);
-        setItems(22, 13, 50, 90, 64);
+        setTrees(23, 55, 34, 77, 89);
+        setMedkits(22, 13, 50, 90, 64);
         setEnemies(44, 69, 99);
         return map;
     }
 
-    public void setObstacles(int first, int... rest) {
-        Obstacle tree = new Tree();
+    public void setTrees(int first, int... rest) {
+        Tree tree = new Tree();
         int xPos = first % 10;
         int yPos = first / 10;
         map[yPos][xPos] = tree;
@@ -49,16 +47,16 @@ public class PlayingField {
         }
     }
 
-    public void setItems(int first, int... rest){
-        Item item = new Item();
+    public void setMedkits(int first, int... rest){
+        Medkit medkit = new Medkit();
         int xPos = first % 10;
         int yPos = first / 10;
-        map[yPos][xPos] = item;
+        map[yPos][xPos] = medkit;
 
         for(int pos : rest){
             xPos = pos % 10;
             yPos = pos / 10;
-            map[yPos][xPos] = item;
+            map[yPos][xPos] = medkit;
         }
     }
 
@@ -107,9 +105,9 @@ public class PlayingField {
             System.out.println("Can't move through obstacle!");
             return true;
         }
-        else if (map[ypos][xpos] instanceof Item) {
+        else if (map[ypos][xpos] instanceof Medkit) {
             hiScore += 10;
-            System.out.println("Picked up an item!");
+            System.out.println("Picked up an medkit!");
             return false;
         }
         else if (map[ypos][xpos] instanceof SmallEnemy) {
