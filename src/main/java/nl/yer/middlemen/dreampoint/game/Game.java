@@ -21,7 +21,7 @@ public class Game {
         player.setRandomStartPlayerPosition();
 
         while(runningGame) {
-            level.levelViewer(player.getMap());
+            level.levelViewer();
             Scanner inputScanner = new Scanner(System.in);
             String input = inputScanner.nextLine().toLowerCase();
 

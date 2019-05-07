@@ -22,7 +22,6 @@ public class Player extends Character {
     private String hairColour;
     private int score;
     private int health = 100;
-    private PiecesOnPlayingField[][] map ;
     private int playerYpos;
     private int playerXpos;
 
@@ -31,37 +30,37 @@ public class Player extends Character {
 
        switch (direction.charAt(0)) {
            case 'w':
-               if(level.checkBoundaries(map, playerYpos - 1, playerXpos)) {
-                    if (!level.hasCollision(this.map, playerYpos - 1, playerXpos)) {
-                        this.map[playerYpos][playerXpos] = null;
-                        this.map[--playerYpos][playerXpos] = this;
+               if(level.checkBoundaries(playerYpos - 1, playerXpos)) {
+                    if (!level.hasCollision(playerYpos - 1, playerXpos)) {
+                        PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
+                        PlayingField.setObjectOnMap(--playerYpos, playerXpos, this);
                     }
                }
                break;
 
            case 's':
-               if(level.checkBoundaries(map, playerYpos + 1, playerXpos)) {
-                   if (!level.hasCollision(this.map, playerYpos + 1, playerXpos)) {
-                       this.map[playerYpos][playerXpos] = null;
-                       this.map[++playerYpos][playerXpos] = this;
+               if(level.checkBoundaries(playerYpos + 1, playerXpos)) {
+                   if (!level.hasCollision(playerYpos + 1, playerXpos)) {
+                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
+                       PlayingField.setObjectOnMap(++playerYpos, playerXpos, this);
                    }
                }
                break;
 
            case 'd':
-               if(level.checkBoundaries(map, playerYpos, playerXpos + 1)) {
-                   if (!level.hasCollision(this.map, playerYpos, playerXpos + 1)) {
-                       this.map[playerYpos][playerXpos] = null;
-                       this.map[playerYpos][++playerXpos] = this;
+               if(level.checkBoundaries(playerYpos, playerXpos + 1)) {
+                   if (!level.hasCollision(playerYpos, playerXpos + 1)) {
+                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
+                       PlayingField.setObjectOnMap(playerYpos, ++playerXpos, this);
                    }
                }
                break;
 
            case 'a':
-               if(level.checkBoundaries(map, playerYpos, playerXpos -1)) {
-                   if (!level.hasCollision(this.map, playerYpos, playerXpos - 1)) {
-                       this.map[playerYpos][playerXpos] = null;
-                       this.map[playerYpos][--playerXpos] = this;
+               if(level.checkBoundaries(playerYpos, playerXpos -1)) {
+                   if (!level.hasCollision(playerYpos, playerXpos - 1)) {
+                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
+                       PlayingField.setObjectOnMap(playerYpos, --playerXpos, this);
                    }
                }
                break;
@@ -74,25 +73,25 @@ public class Player extends Character {
 
            switch (direction.charAt(0)) {
                case 'i':
-                   while ((level.checkBoundaries(map, playerYpos - i, playerXpos)) &&
-                           (level.canShoot(map, playerYpos - i, playerXpos))) {
-                       map[playerYpos - i][playerXpos] = null;
+                   while ((level.checkBoundaries(playerYpos - i, playerXpos)) &&
+                           (level.canShoot(playerYpos - i, playerXpos))) {
+                       PlayingField.setObjectOnMap(playerYpos - i, playerXpos, null);
                        i++;
                    }
                    break;
 
                case 'k':
-                   while ((level.checkBoundaries(map, playerYpos + i, playerXpos)) &&
-                           (level.canShoot(map, playerYpos + i, playerXpos))) {
-                       map[playerYpos + i][playerXpos] = null;
+                   while ((level.checkBoundaries(playerYpos + i, playerXpos)) &&
+                           (level.canShoot(playerYpos + i, playerXpos))) {
+                       PlayingField.setObjectOnMap(playerYpos + i, playerXpos, null);
                        i++;
                    }
                    break;
 
                case 'l':
-                   while ((level.checkBoundaries(map, playerYpos, playerXpos + i)) &&
-                           (level.canShoot(map, playerYpos, playerXpos + i))) {
-                       map[playerYpos][playerXpos + i] = null;
+                   while ((level.checkBoundaries(playerYpos, playerXpos + i)) &&
+                           (level.canShoot(playerYpos, playerXpos + i))) {
+                       PlayingField.setObjectOnMap(playerYpos, playerXpos + i, null);
                        i++;
                    }
                    break;
@@ -187,7 +186,7 @@ public class Player extends Character {
             yPos = pos / 10;
         } while(map[yPos][xPos] != null);
 
-        map[yPos][xPos] = this;
+        PlayingField.map[yPos][xPos] = this;
         playerXpos = xPos;
         playerYpos= yPos;
     }

@@ -1,5 +1,7 @@
 package nl.yer.middlemen.dreampoint.character;
 
+import nl.yer.middlemen.dreampoint.playingfield.PlayingField;
+
 public class SmallEnemy extends Enemy {
 
     private long id;
@@ -17,4 +19,10 @@ public class SmallEnemy extends Enemy {
 
     @Override
     public String toString() {return "\u2622";}
+
+    @Override
+    public void move() {
+        PlayingField p = new PlayingField();
+        p.hasCollision()
+    }
 }
