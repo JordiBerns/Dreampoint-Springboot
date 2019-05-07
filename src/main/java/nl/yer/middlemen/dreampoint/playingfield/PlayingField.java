@@ -121,15 +121,17 @@ public class PlayingField {
      * Object. If it can't shoot the Object, it will return false.
      */
     public boolean canShoot(int ypos, int xpos) {
-        boolean possible;
+        boolean possible =true;
         PiecesOnPlayingField pieceOnField;
 
         if (map[ypos][xpos] != null) {
             pieceOnField = map[ypos][xpos];
-            possible = pieceOnField.determineIfCanShoot();
-        }
-        else {
-            possible = true;
+            if (map[ypos][xpos].isCanContinueShooting()) {
+                possible = pieceOnField.determineIfCanShoot();
+            } else if ((!map[ypos][xpos].isCanContinueShooting()) && (map[ypos][xpos].isCanDamage())) {
+                setNullOnMap(ypos, xpos);
+                possible = false;
+            }
         }
         return possible;
     }
