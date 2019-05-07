@@ -1,6 +1,5 @@
 package nl.yer.middlemen.dreampoint.character;
 
-import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.playingfield.PlayingField;
 
 import javax.persistence.Entity;
@@ -105,7 +104,6 @@ public class Player extends Character {
                    break;
            }
        }
-   }
 
    public void initializePlayer(){
        Scanner input = new Scanner(System.in);
