@@ -1,11 +1,14 @@
 package nl.yer.middlemen.dreampoint.playingfield;
 import nl.yer.middlemen.dreampoint.character.BigEnemy;
+import nl.yer.middlemen.dreampoint.character.Enemy;
 import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.item.Medkit;
 import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
+import java.util.ArrayList;
+import java.util.List;
 
 import static nl.yer.middlemen.dreampoint.game.Game.hiScore;
 
@@ -14,9 +17,8 @@ public class PlayingField {
     private int fieldWidth;
     private int fieldHeight;
     private Player player;
-
-    private static PiecesOnPlayingField[][] map ;
-
+    private static PiecesOnPlayingField[][] map;
+    private List<Enemy> enemies = new ArrayList<>();
     public PlayingField(){
     }
 
@@ -59,16 +61,23 @@ public class PlayingField {
     }
 
     public void setEnemies(int first, int... rest) {
-        SmallEnemy smallEnemy = new SmallEnemy();
         BigEnemy bigEnemy = new BigEnemy();
         int xPos = first % 10;
         int yPos = first / 10;
+        bigEnemy.setxPos(xPos);
+        bigEnemy.setyPos(yPos);
         map[yPos][xPos] = bigEnemy;
+        enemies.add(bigEnemy);
 
+        SmallEnemy smallEnemy;
         for (int pos : rest) {
+            smallEnemy = new SmallEnemy();
             xPos = pos % 10;
             yPos = pos / 10;
+            smallEnemy.setxPos(xPos);
+            smallEnemy.setyPos(yPos);
             map[yPos][xPos] = smallEnemy;
+            enemies.add(smallEnemy);
         }
     }
 
@@ -77,7 +86,7 @@ public class PlayingField {
      * Checks if the index (of the arrays) won't go out of bounds, returns a boolean true if both indexes are inbound
      * Otherwise it will always return false.
      */
-    public boolean checkBoundaries (PiecesOnPlayingField map[][], int ypos, int xpos) {
+    public boolean checkBoundaries (int ypos, int xpos) {
         boolean possible = false;
         if ( (ypos < map.length) && (ypos >= 0) ) {
             if ( (xpos < map[0].length) && (xpos >= 0) ) possible = true;
@@ -90,7 +99,7 @@ public class PlayingField {
      * The Entity class could then have a field: boolean collision = false. Then the obstacle could hide this field
      * with boolean collision = true and the hasCollision function would simply be: return map[ypos][xpos].getCollision()
      */
-    public boolean hasCollision(PiecesOnPlayingField map[][], int ypos, int xpos) { //Checks if there is anything on (ypos, xpos)
+    public boolean hasCollision(int ypos, int xpos) { //Checks if there is anything on (ypos, xpos)
         if (map[ypos][xpos] == null) return false;
         else if (map[ypos][xpos] instanceof Obstacle) {
             System.out.println("Can't move through obstacle!");
@@ -111,7 +120,7 @@ public class PlayingField {
      * Check to see what Object is on the field. Every Object has an interaction and returns true if it can shoot the
      * Object. If it can't shoot the Object, it will return false.
      */
-    public boolean canShoot(PiecesOnPlayingField map[][], int ypos, int xpos) {
+    public boolean canShoot(int ypos, int xpos) {
         boolean possible;
         PiecesOnPlayingField pieceOnField;
 
@@ -125,10 +134,11 @@ public class PlayingField {
         return possible;
     }
 
+
     /*
      * Displays the level.
      */
-    public void levelViewer(PiecesOnPlayingField map[][]){
+    public void levelViewer(){
 
         for(PiecesOnPlayingField[] row : map){
             for(PiecesOnPlayingField element: row){
@@ -139,8 +149,22 @@ public class PlayingField {
         }
     }
 
-    public void playerSpawn(){}
-    public void enemySpawn(){}
+    public void moveEnemies(){
+        for (Enemy e : enemies){
+            e.move();
+        }
+    }
+    public static void setObjectOnMap(int yPos, int xPos, PiecesOnPlayingField piece){
+        map[yPos][xPos] = piece;
+    }
+
+    public static void setNullOnMap(int yPos, int xPos){
+        map[yPos][xPos] = null;
+    }
+    public static PiecesOnPlayingField checkObjectOnMap(int yPos, int xPos){
+        return map[yPos][xPos];
+    }
+
     public int getFieldWidth() {
         return fieldWidth;
     }

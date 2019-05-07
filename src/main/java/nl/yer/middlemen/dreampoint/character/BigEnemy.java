@@ -35,4 +35,9 @@ public class BigEnemy extends Enemy {
 
     @Override
     public String toString() {return "\u2620";}
+
+    @Override
+    public void move(){
+
+    }
 }

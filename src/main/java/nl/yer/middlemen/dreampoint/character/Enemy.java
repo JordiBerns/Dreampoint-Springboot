@@ -4,6 +4,24 @@ public abstract class Enemy extends Character {
 
     private long id;
     private int addToHiScore;
+    private int xPos;
+    private int yPos;
+
+    public int getxPos() {
+        return xPos;
+    }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
 
     @Override
     public abstract boolean determineIfCanShoot();
@@ -20,5 +38,7 @@ public abstract class Enemy extends Character {
     public void setAddToHiScore(int addToHiScore) {
         this.addToHiScore = addToHiScore;
     }
+
+    public abstract void move();
 
 }
