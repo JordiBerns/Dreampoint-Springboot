@@ -68,4 +68,5 @@ public class HelpMenu {
     public long getId() {
         return id;
     }
+
 }

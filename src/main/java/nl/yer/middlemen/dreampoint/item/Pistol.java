@@ -1,20 +1,25 @@
 package nl.yer.middlemen.dreampoint.item;
 
-import static nl.yer.middlemen.dreampoint.game.Game.hiScore;
-
 public class Pistol extends Weapon {
     private long id;
 
     public Pistol() {
-        this.setCanDamage(false);
+        super();
+        this.setCanBeDamaged(false);
     }
-
-    public void shoot(){}
 
     @Override
-    public boolean determineIfCanShoot() {
+    public void reactionToCollision() {
+        System.out.println("You've picked up an pistol!");
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
         return false;
     }
+
+    @Override
+    public void shoot(){}
 
     @Override
     public long getId() {

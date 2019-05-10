@@ -5,69 +5,64 @@ import nl.yer.middlemen.dreampoint.character.Player;
 import nl.yer.middlemen.dreampoint.character.SmallEnemy;
 import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 import nl.yer.middlemen.dreampoint.item.Medkit;
-import nl.yer.middlemen.dreampoint.obstacle.Obstacle;
 import nl.yer.middlemen.dreampoint.obstacle.Tree;
 import java.util.ArrayList;
 import java.util.List;
-
-import static nl.yer.middlemen.dreampoint.game.Game.hiScore;
 
 public class PlayingField {
     private long id;
     private int fieldWidth;
     private int fieldHeight;
     private Player player;
-    private static PiecesOnPlayingField[][] map;
-    private List<Enemy> enemies = new ArrayList<>();
-    public PlayingField(){
-    }
+    private static PiecesOnPlayingField[][] level;
+    private List<Enemy> enemiesOnPlayingField = new ArrayList<>();
 
-    public PiecesOnPlayingField[][] makeLevel() {
+    public PiecesOnPlayingField[][] createNewPlayingField() {
         this.fieldWidth = 10;
         this.fieldHeight = 10;
-        map = new PiecesOnPlayingField[fieldHeight][fieldWidth];
+        level = new PiecesOnPlayingField[fieldHeight][fieldWidth];
 
         //Setting items, obstacles and random player position
-        setTrees(23, 55, 34, 77, 89);
-        setMedkits(22, 13, 50, 90, 64);
-        setEnemies(44, 69, 99);
-        return map;
+        putTreesOnPlayingField(23, 55, 34, 77, 89);
+        putMedKitsOnPlayingField(22, 13, 50, 90, 64);
+        putEnemiesOnPlayingField(44, 69, 99);
+        return level;
     }
 
-    public void setTrees(int first, int... rest) {
+    public void putTreesOnPlayingField(int first, int... rest) {
         Tree tree = new Tree();
         int xPos = first % 10;
         int yPos = first / 10;
-        map[yPos][xPos] = tree;
+        level[yPos][xPos] = tree;
 
         for (int pos : rest) {
             xPos = pos % 10;
             yPos = pos / 10;
-            map[yPos][xPos] = tree;
+            level[yPos][xPos] = tree;
         }
     }
 
-    public void setMedkits(int first, int... rest){
+    public void putMedKitsOnPlayingField(int first, int... rest){
         Medkit medkit = new Medkit();
         int xPos = first % 10;
         int yPos = first / 10;
-        map[yPos][xPos] = medkit;
+        level[yPos][xPos] = medkit;
 
         for(int pos : rest){
             xPos = pos % 10;
             yPos = pos / 10;
-            map[yPos][xPos] = medkit;
+            level[yPos][xPos] = medkit;
         }
     }
 
-    public void setEnemies(int first, int... rest) {
+    public void putEnemiesOnPlayingField(int first, int... rest) {
         BigEnemy bigEnemy = new BigEnemy();
         int xPos = first % 10;
         int yPos = first / 10;
         bigEnemy.setxPos(xPos);
         bigEnemy.setyPos(yPos);
-        map[yPos][xPos] = bigEnemy;
-        enemies.add(bigEnemy);
+        level[yPos][xPos] = bigEnemy;
+        enemiesOnPlayingField.add(bigEnemy);
 
         SmallEnemy smallEnemy;
         for (int pos : rest) {
@@ -76,73 +71,70 @@ public class PlayingField {
             yPos = pos / 10;
             smallEnemy.setxPos(xPos);
             smallEnemy.setyPos(yPos);
-            map[yPos][xPos] = smallEnemy;
-            enemies.add(smallEnemy);
+            level[yPos][xPos] = smallEnemy;
+            enemiesOnPlayingField.add(smallEnemy);
         }
     }
-
 
     /*
      * Checks if the index (of the arrays) won't go out of bounds, returns a boolean true if both indexes are inbound
      * Otherwise it will always return false.
      */
-    public boolean checkBoundaries (int ypos, int xpos) {
+    public boolean notMovingOutOfBounds(int ypos, int xpos) {
         boolean possible = false;
-        if ( (ypos < map.length) && (ypos >= 0) ) {
-            if ( (xpos < map[0].length) && (xpos >= 0) ) possible = true;
+        if ((ypos < level.length) && (ypos >= 0)) {
+            if ((xpos < level[0].length) && (xpos >= 0)) {
+                possible = true;
+            }
         }
         return possible;
     }
 
     /*FOR FUTURE: instanceof is bad style, need different way of checking collision.
-     * Maybe the object array map needs to be an 'Entity' array which is a parent class of all classes that can appear on the grid.
+     * Maybe the object array level needs to be an 'Entity' array which is a parent class of all classes that can appear on the grid.
      * The Entity class could then have a field: boolean collision = false. Then the obstacle could hide this field
-     * with boolean collision = true and the hasCollision function would simply be: return map[ypos][xpos].getCollision()
+     * with boolean collision = true and the canHaveCollisionWithOtherPiece function would simply be: return level[ypos][xpos].getCollision()
      */
-    public boolean hasCollision(int ypos, int xpos) { //Checks if there is anything on (ypos, xpos)
-        if (map[ypos][xpos] == null) return false;
-        else if (map[ypos][xpos] instanceof Obstacle) {
-            System.out.println("Can't move through obstacle!");
+    public boolean canHaveCollisionWithOtherPiece(int ypos, int xpos) { //Checks if there is anything on (ypos, xpos)
+        PiecesOnPlayingField pieceOnField = level[ypos][xpos];
+
+        if (pieceOnField == null) return true;
+        else if (pieceOnField.isCanCollideWithOtherPiece()) {
+            pieceOnField.reactionToCollision();
             return true;
         }
-        else if (map[ypos][xpos] instanceof Medkit) {
-            hiScore += 10;
-            System.out.println("Picked up an medkit!");
+        else {
+            pieceOnField.reactionToCollision();
             return false;
         }
-        else if (map[ypos][xpos] instanceof SmallEnemy) {
-            System.out.println("Can't move through enemies!");
-            return true;
-        } else return false;
     }
 
     /*
      * Check to see what Object is on the field. Every Object has an interaction and returns true if it can shoot the
      * Object. If it can't shoot the Object, it will return false.
      */
-    public boolean canShoot(int ypos, int xpos) {
-        boolean possible =true;
+    public boolean canPieceBeShotAt(int ypos, int xpos) {
+        boolean possible = true;
         PiecesOnPlayingField pieceOnField;
 
-        if (map[ypos][xpos] != null) {
-            pieceOnField = map[ypos][xpos];
-            if (map[ypos][xpos].isCanContinueShooting()) {
-                possible = pieceOnField.determineIfCanShoot();
-            } else if ((!map[ypos][xpos].isCanContinueShooting()) && (map[ypos][xpos].isCanDamage())) {
-                setNullOnMap(ypos, xpos);
+        if (level[ypos][xpos] != null) {
+            pieceOnField = level[ypos][xpos];
+            if (level[ypos][xpos].isCanContinueShootingAfterBeenShot()) {
+                possible = pieceOnField.reactionToBeingShot();
+            } else if ((!level[ypos][xpos].isCanContinueShootingAfterBeenShot()) && (level[ypos][xpos].isCanBeDamaged())) {
+                putNullOnPlayingField(ypos, xpos);
                 possible = false;
             }
         }
         return possible;
     }
 
-
     /*
      * Displays the level.
      */
-    public void levelViewer(){
+    public void printPlayingField(){
 
-        for(PiecesOnPlayingField[] row : map){
+        for(PiecesOnPlayingField[] row : level){
             for(PiecesOnPlayingField element: row){
                 if (element ==null) System.out.print("\u25A1\t");
                 else System.out.print(element+ "\t");
@@ -152,34 +144,58 @@ public class PlayingField {
     }
 
     public void moveEnemies(){
-        for (Enemy e : enemies){
+        for (Enemy e : enemiesOnPlayingField){
             e.move();
         }
     }
-    public static void setObjectOnMap(int yPos, int xPos, PiecesOnPlayingField piece){
-        map[yPos][xPos] = piece;
+    public static void putObjectOnPlayingField(int yPos, int xPos, PiecesOnPlayingField piece){
+        level[yPos][xPos] = piece;
     }
 
-    public static void setNullOnMap(int yPos, int xPos){
-        map[yPos][xPos] = null;
+    public static void putNullOnPlayingField(int yPos, int xPos){
+        level[yPos][xPos] = null;
     }
-    public static PiecesOnPlayingField checkObjectOnMap(int yPos, int xPos){
-        return map[yPos][xPos];
+
+    public static PiecesOnPlayingField checkObjectOnPlayingField(int yPos, int xPos){
+        return level[yPos][xPos];
+    }
+
+    public long getId() {
+        return id;
     }
 
     public int getFieldWidth() {
         return fieldWidth;
     }
+
     public void setFieldWidth(int fieldWidth) {
         this.fieldWidth = fieldWidth;
     }
+
     public int getFieldHeight() {
         return fieldHeight;
     }
+
     public void setFieldHeight(int fieldHeight) {
         this.fieldHeight = fieldHeight;
     }
-    public long getId() {
-        return id;
+
+    public Player getPlayer() {
+        return player;
     }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public List<Enemy> getEnemiesOnPlayingField() {
+        return enemiesOnPlayingField;
+    }
+
+    public void setEnemiesOnPlayingField(List<Enemy> enemiesOnPlayingField) {
+        this.enemiesOnPlayingField = enemiesOnPlayingField;
+    }
+
+
+
 }

@@ -8,20 +8,20 @@ import java.util.Scanner;
 public class Game {
     private long id;
     private Player player;
-    private PlayingField level = new PlayingField();
+    private PlayingField playingField = new PlayingField();
     public static int hiScore;
 
     // method to create player and start method to let user give information
-    // after that de playingField wil start with the method to show the level and activates moving.
+    // after that de playingField wil start with the method to show the playingField and activates moving.
     public void runGame() {
         boolean runningGame = true;
         this.player = new Player();
-        //this.player.initializePlayer();
-        level.makeLevel();
-        player.setRandomStartPlayerPosition();
+        //this.player.createNewPlayer();
+        playingField.createNewPlayingField();
+        player.setRandomStartPositionPlayer();
 
         while(runningGame) {
-            level.levelViewer();
+            playingField.printPlayingField();
             Scanner inputScanner = new Scanner(System.in);
             String input = inputScanner.nextLine().toLowerCase();
             if(input.length() <=0) {
@@ -35,7 +35,7 @@ public class Game {
             } else {
                 System.out.println("Something went wrong, please enter 'w', 'a', 's', 'd' // 'i', 'j', 'k', 'l' // 'p'");
             }
-            level.moveEnemies();
+            playingField.moveEnemies();
         }
     }
 
@@ -45,6 +45,14 @@ public class Game {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
+    public void setPlayingField(PlayingField playingField) {
+        this.playingField = playingField;
     }
 
     /*

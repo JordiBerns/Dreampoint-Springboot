@@ -4,19 +4,26 @@ public class Shotgun extends Weapon {
     private long id;
 
     public Shotgun() {
-        this.setCanDamage(false);
+        super();
+        this.setCanBeDamaged(false);
+    }
+
+    @Override
+    public void reactionToCollision() {
+        System.out.println("You've picked up an shotgun!");
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
+        return false;
     }
 
     @Override
     public void shoot() { }
 
     @Override
-    public boolean determineIfCanShoot() {
-        return false;
-    }
-
-    @Override
     public long getId() {
         return id;
     }
+
 }

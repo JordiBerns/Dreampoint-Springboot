@@ -4,16 +4,22 @@ public class RocketLauncher extends Weapon {
     private long id;
 
     public RocketLauncher() {
-        this.setCanDamage(false);
+        super();
+        this.setCanBeDamaged(false);
+    }
+
+    @Override
+    public void reactionToCollision() {
+        System.out.println("You've picked up an rocketlauncher!");
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
+        return false;
     }
 
     @Override
     public void shoot() { }
-
-    @Override
-    public boolean determineIfCanShoot() {
-        return false;
-    }
 
     @Override
     public long getId() {

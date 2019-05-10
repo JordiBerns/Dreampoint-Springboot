@@ -4,12 +4,16 @@ import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 
 public abstract class Character extends PiecesOnPlayingField {
 
-    private String name;
-    private boolean collision;
     private long id;
+    private String name;
 
-//    public void shoot() { }
-//    public void move() { }
+    public Character() {
+        this.setCanCollideWithOtherPiece(true);
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -19,15 +23,4 @@ public abstract class Character extends PiecesOnPlayingField {
         this.name = name;
     }
 
-    public boolean isCollision() {
-        return collision;
-    }
-
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
-
-    public long getId() {
-        return id;
-    }
 }

@@ -5,14 +5,15 @@ public class Tree extends Obstacle {
     private long id;
 
     public Tree() {
-        this.setCanDamage(true);
+        super();
+        this.setCanBeDamaged(true);
         this.setCanTakeAmountOfShots(1);
-        this.setCanContinueShooting(false);
+        this.setCanContinueShootingAfterBeenShot(false);
     }
 
     @Override
-    public boolean determineIfCanShoot() {
-        if (this.isCanDamage()) {
+    public boolean reactionToBeingShot() {
+        if (this.isCanBeDamaged()) {
             if (this.getCanTakeAmountOfShots() > 1) {
                 this.setCanTakeAmountOfShots(this.getCanTakeAmountOfShots() - 1);
                 return false;
@@ -25,12 +26,13 @@ public class Tree extends Obstacle {
     }
 
     @Override
+    public String toString() {
+        return "\u2663";
+    }
+
+    @Override
     public long getId() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "\u2663";
-    }
 }

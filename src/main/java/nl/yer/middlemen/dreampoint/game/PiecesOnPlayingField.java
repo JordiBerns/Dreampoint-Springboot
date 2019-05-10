@@ -3,10 +3,13 @@ package nl.yer.middlemen.dreampoint.game;
 public abstract class PiecesOnPlayingField {
 
     private int canTakeAmountOfShots;
-    private boolean canDamage;
-    private boolean canContinueShooting;
+    private boolean canBeDamaged;
+    private boolean canContinueShootingAfterBeenShot;
+    private boolean canCollideWithOtherPiece;
 
-    public abstract boolean determineIfCanShoot();
+    public abstract boolean reactionToBeingShot();
+
+    public abstract void reactionToCollision();
 
     public int getCanTakeAmountOfShots() {
         return canTakeAmountOfShots;
@@ -16,19 +19,28 @@ public abstract class PiecesOnPlayingField {
         this.canTakeAmountOfShots = canTakeAmountOfShots;
     }
 
-    public boolean isCanDamage() {
-        return canDamage;
+    public boolean isCanBeDamaged() {
+        return canBeDamaged;
     }
 
-    public void setCanDamage(boolean canDamage) {
-        this.canDamage = canDamage;
+    public void setCanBeDamaged(boolean canBeDamaged) {
+        this.canBeDamaged = canBeDamaged;
     }
 
-    public boolean isCanContinueShooting() {
-        return canContinueShooting;
+    public boolean isCanContinueShootingAfterBeenShot() {
+        return canContinueShootingAfterBeenShot;
     }
 
-    public void setCanContinueShooting(boolean canContinueShooting) {
-        this.canContinueShooting = canContinueShooting;
+    public void setCanContinueShootingAfterBeenShot(boolean canContinueShootingAfterBeenShot) {
+        this.canContinueShootingAfterBeenShot = canContinueShootingAfterBeenShot;
     }
+
+    public boolean isCanCollideWithOtherPiece() {
+        return canCollideWithOtherPiece;
+    }
+
+    public void setCanCollideWithOtherPiece(boolean canCollideWithOtherPiece) {
+        this.canCollideWithOtherPiece = canCollideWithOtherPiece;
+    }
+
 }
