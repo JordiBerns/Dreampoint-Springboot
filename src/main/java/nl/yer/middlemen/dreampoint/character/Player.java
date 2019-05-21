@@ -20,96 +20,100 @@ public class Player extends Character {
     private String name;
     private String hairColour;
     private int score;
-    private int health = 100;
     private int playerYpos;
     private int playerXpos;
 
-   public void move(String direction) {
-       PlayingField level = new PlayingField();
+    public Player() {
+        super();
+        this.setCanTakeAmountOfShots(3);
+    }
+
+    public void move(String direction) {
+       PlayingField playingField = new PlayingField();
 
        switch (direction.charAt(0)) {
            case 'w':
-               if(level.checkBoundaries(playerYpos - 1, playerXpos)) {
-                    if (!level.hasCollision(playerYpos - 1, playerXpos)) {
-                        PlayingField.setNullOnMap(playerYpos, playerXpos);
-                        PlayingField.setObjectOnMap(--playerYpos, playerXpos, this);
+               if(playingField.notMovingOutOfBounds(playerYpos - 1, playerXpos)) {
+                    if (playingField.canHaveCollisionWithOtherPiece(playerYpos - 1, playerXpos)) {
+                        PlayingField.putNullOnPlayingField(playerYpos, playerXpos);
+                        PlayingField.putObjectOnPlayingField(--playerYpos, playerXpos, this);
                     }
                }
                break;
 
            case 's':
-               if(level.checkBoundaries(playerYpos + 1, playerXpos)) {
-                   if (!level.hasCollision(playerYpos + 1, playerXpos)) {
-                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
-                       PlayingField.setObjectOnMap(++playerYpos, playerXpos, this);
+               if(playingField.notMovingOutOfBounds(playerYpos + 1, playerXpos)) {
+                   if (playingField.canHaveCollisionWithOtherPiece(playerYpos + 1, playerXpos)) {
+                       PlayingField.putObjectOnPlayingField(playerYpos, playerXpos, null);
+                       PlayingField.putObjectOnPlayingField(++playerYpos, playerXpos, this);
                    }
                }
                break;
 
            case 'd':
-               if(level.checkBoundaries(playerYpos, playerXpos + 1)) {
-                   if (!level.hasCollision(playerYpos, playerXpos + 1)) {
-                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
-                       PlayingField.setObjectOnMap(playerYpos, ++playerXpos, this);
+               if(playingField.notMovingOutOfBounds(playerYpos, playerXpos + 1)) {
+                   if (playingField.canHaveCollisionWithOtherPiece(playerYpos, playerXpos + 1)) {
+                       PlayingField.putObjectOnPlayingField(playerYpos, playerXpos, null);
+                       PlayingField.putObjectOnPlayingField(playerYpos, ++playerXpos, this);
                    }
                }
                break;
 
            case 'a':
-               if(level.checkBoundaries(playerYpos, playerXpos -1)) {
-                   if (!level.hasCollision(playerYpos, playerXpos - 1)) {
-                       PlayingField.setObjectOnMap(playerYpos, playerXpos, null);
-                       PlayingField.setObjectOnMap(playerYpos, --playerXpos, this);
+               if(playingField.notMovingOutOfBounds(playerYpos, playerXpos -1)) {
+                   if (playingField.canHaveCollisionWithOtherPiece(playerYpos, playerXpos - 1)) {
+                       PlayingField.putObjectOnPlayingField(playerYpos, playerXpos, null);
+                       PlayingField.putObjectOnPlayingField(playerYpos, --playerXpos, this);
                    }
                }
                break;
        }
    }
 
-       public void shoot (String direction){
-           PlayingField level = new PlayingField();
+    public void shoot(String direction){
+           PlayingField playingField = new PlayingField();
            int i = 1;
 
            switch (direction.charAt(0)) {
                case 'i':
-                   while ((level.checkBoundaries(playerYpos - i, playerXpos)) &&
-                           (level.canShoot(playerYpos - i, playerXpos))) {
-                       PlayingField.setObjectOnMap(playerYpos - i, playerXpos, null);
+                   while ((playingField.notMovingOutOfBounds(playerYpos - i, playerXpos)) &&
+                           (playingField.canPieceBeShotAt(playerYpos - i, playerXpos))) {
+                       PlayingField.putObjectOnPlayingField(playerYpos - i, playerXpos, null);
                        i++;
                    }
                    break;
 
                case 'k':
-                   while ((level.checkBoundaries(playerYpos + i, playerXpos)) &&
-                           (level.canShoot(playerYpos + i, playerXpos))) {
-                       PlayingField.setObjectOnMap(playerYpos + i, playerXpos, null);
+                   while ((playingField.notMovingOutOfBounds(playerYpos + i, playerXpos)) &&
+                           (playingField.canPieceBeShotAt(playerYpos + i, playerXpos))) {
+                       PlayingField.putObjectOnPlayingField(playerYpos + i, playerXpos, null);
                        i++;
                    }
                    break;
 
                case 'l':
-                   while ((level.checkBoundaries(playerYpos, playerXpos + i)) &&
-                           (level.canShoot(playerYpos, playerXpos + i))) {
-                       PlayingField.setObjectOnMap(playerYpos, playerXpos + i, null);
+                   while ((playingField.notMovingOutOfBounds(playerYpos, playerXpos + i)) &&
+                           (playingField.canPieceBeShotAt(playerYpos, playerXpos + i))) {
+                       PlayingField.putObjectOnPlayingField(playerYpos, playerXpos + i, null);
                        i++;
                    }
                    break;
 
                case 'j':
-                   while ((level.checkBoundaries(playerYpos, playerXpos - i)) &&
-                           (level.canShoot(playerYpos, playerXpos - i))) {
-                       PlayingField.setObjectOnMap(playerYpos, playerXpos - i, null);
+                   while ((playingField.notMovingOutOfBounds(playerYpos, playerXpos - i)) &&
+                           (playingField.canPieceBeShotAt(playerYpos, playerXpos - i))) {
+                       PlayingField.putObjectOnPlayingField(playerYpos, playerXpos - i, null);
                        i++;
                    }
                    break;
            }
        }
 
-   public void initializePlayer(){
-       Scanner input = new Scanner(System.in);
-       // Boolean statements used later on to check scanner input
-       boolean correctInfo = false;
-       boolean correctAge;
+    public void createNewPlayer(){
+        Scanner input = new Scanner(System.in);
+        // Boolean statements used later on to check scanner input
+        boolean correctInfo = false;
+        boolean correctAge;
 
         while (!correctInfo) {
             System.out.println();
@@ -175,7 +179,7 @@ public class Player extends Character {
     }
 
     /** FOR FUTURE: Player created in function below needs to be coupled to player created in Game class.*/
-    public void setRandomStartPlayerPosition(){    //Sets random start position of player
+    public void setRandomStartPositionPlayer(){    //Sets random start position of player
         int pos;
         int xPos;
         int yPos;
@@ -183,21 +187,26 @@ public class Player extends Character {
             pos = (int) (Math.random() * 100);  //Random position between 0 and 99
             xPos = pos % 10;
             yPos = pos / 10;
-        } while(PlayingField.checkObjectOnMap(yPos, xPos) != null);
+        } while(PlayingField.checkObjectOnPlayingField(yPos, xPos) != null);
 
-        PlayingField.setObjectOnMap(yPos, xPos, this);
+        PlayingField.putObjectOnPlayingField(yPos, xPos, this);
         playerXpos = xPos;
         playerYpos = yPos;
     }
 
     @Override
-    public String toString() {
-        return "\u263A";
+    public void reactionToCollision() {
+        System.out.println("A collision with the player happened!");
     }
 
     @Override
-    public boolean determineIfCanShoot() {
+    public boolean reactionToBeingShot() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "\u263A";
     }
 
     @Override
@@ -262,12 +271,6 @@ public class Player extends Character {
     public void setPlayerXpos(int playerXpos) {
         this.playerXpos = playerXpos;
     }
-
-
-//    @Override
-//    public void shotsTaken() {
-//
-//    }
 
     //    private int bullets;
 //    private Weapon weapon;

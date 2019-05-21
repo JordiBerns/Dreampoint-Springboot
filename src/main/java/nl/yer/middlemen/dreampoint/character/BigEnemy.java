@@ -7,15 +7,21 @@ public class BigEnemy extends Enemy {
     private long id;
 
     public BigEnemy() {
-        this.setCanDamage(true);
+        super();
+        this.setCanBeDamaged(true);
         this.setCanTakeAmountOfShots(2);
         this.setAddToHiScore(20);
-        this.setCanContinueShooting(true);
+        this.setCanContinueShootingAfterBeenShot(true);
     }
 
     @Override
-    public boolean determineIfCanShoot() {
-        if (this.isCanDamage()) {
+    public void reactionToCollision() {
+        System.out.println("A collision with the BigEnemy happened!");
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
+        if (this.isCanBeDamaged()) {
             if (this.getCanTakeAmountOfShots() > 1) {
                 this.setCanTakeAmountOfShots(this.getCanTakeAmountOfShots() - 1);
                 return false;
@@ -29,15 +35,14 @@ public class BigEnemy extends Enemy {
     }
 
     @Override
+    public String toString() {return "\u2620";}
+
+    @Override
+    public void move(){}
+
+    @Override
     public long getId() {
         return id;
     }
 
-    @Override
-    public String toString() {return "\u2620";}
-
-    @Override
-    public void move(){
-
-    }
 }

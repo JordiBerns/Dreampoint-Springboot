@@ -5,8 +5,14 @@ public class Wall extends Obstacle {
     private long id;
 
     public Wall() {
-        this.setCanDamage(false);
-        this.setCanContinueShooting(false);
+        super();
+        this.setCanBeDamaged(false);
+        this.setCanContinueShootingAfterBeenShot(false);
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
+        return false;
     }
 
     @Override
@@ -14,8 +20,5 @@ public class Wall extends Obstacle {
         return id;
     }
 
-    @Override
-    public boolean determineIfCanShoot() {
-        return false;
-    }
+
 }

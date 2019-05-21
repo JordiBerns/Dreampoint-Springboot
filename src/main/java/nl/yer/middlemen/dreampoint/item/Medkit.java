@@ -7,18 +7,21 @@ public class Medkit extends Item {
     private int hp;
 
     public Medkit() {
-        this.setCanDamage(true);
+        super();
+        this.setCanBeDamaged(true);
         this.setCanTakeAmountOfShots(1);
-        this.setCanContinueShooting(true);
-    }
-
-    public int increaseHp(){
-        return 0;
+        this.setCanContinueShootingAfterBeenShot(true);
     }
 
     @Override
-    public boolean determineIfCanShoot() {
-        if (this.isCanDamage()) {
+    public void reactionToCollision() {
+        System.out.println("You've picked up an MedKit!");
+        hiScore += 10;
+    }
+
+    @Override
+    public boolean reactionToBeingShot() {
+        if (this.isCanBeDamaged()) {
             if (this.getCanTakeAmountOfShots() > 1) {
                 this.setCanTakeAmountOfShots(this.getCanTakeAmountOfShots() - 1);
                 return false;
@@ -49,4 +52,5 @@ public class Medkit extends Item {
     public void setHp(int hp) {
         this.hp = hp;
     }
+
 }

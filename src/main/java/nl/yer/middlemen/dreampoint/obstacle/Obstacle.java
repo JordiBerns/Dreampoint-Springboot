@@ -4,12 +4,25 @@ import nl.yer.middlemen.dreampoint.game.PiecesOnPlayingField;
 
 public abstract class Obstacle extends PiecesOnPlayingField {
 
+    private long id;
     private int xPosition;
     private int yPosition;
-    private long id;
+
+    public Obstacle() {
+        this.setCanCollideWithOtherPiece(false);
+    }
 
     @Override
-    public abstract boolean determineIfCanShoot();
+    public void reactionToCollision() {
+        System.out.println("You can't move through an obstacle!");
+    }
+
+    @Override
+    public abstract boolean reactionToBeingShot();
+
+    public long getId() {
+        return id;
+    }
 
     public int getXPosition() {
         return xPosition;
@@ -26,8 +39,5 @@ public abstract class Obstacle extends PiecesOnPlayingField {
     public void setYPosition(int yPosition) {
         this.yPosition = yPosition;
     }
-    
-    public long getId() {
-        return id;
-    }
+
 }

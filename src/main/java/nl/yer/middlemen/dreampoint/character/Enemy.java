@@ -7,6 +7,28 @@ public abstract class Enemy extends Character {
     private int xPos;
     private int yPos;
 
+    public Enemy() {
+        super();
+    }
+
+    public abstract void move();
+
+    @Override
+    public abstract boolean reactionToBeingShot();
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    public int getAddToHiScore() {
+        return addToHiScore;
+    }
+
+    public void setAddToHiScore(int addToHiScore) {
+        this.addToHiScore = addToHiScore;
+    }
+
     public int getxPos() {
         return xPos;
     }
@@ -22,23 +44,5 @@ public abstract class Enemy extends Character {
     public void setyPos(int yPos) {
         this.yPos = yPos;
     }
-
-    @Override
-    public abstract boolean determineIfCanShoot();
-
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    public int getAddToHiScore() {
-        return addToHiScore;
-    }
-
-    public void setAddToHiScore(int addToHiScore) {
-        this.addToHiScore = addToHiScore;
-    }
-
-    public abstract void move();
 
 }
